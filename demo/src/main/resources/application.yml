@@ -1,0 +1,13 @@
+#people:
+#  name: yanglei
+#  age: 22
+#  boss: true
+#  birth: 1998/03/11
+#  map: {k1: eat, k2: play, k3: sleep}
+#  list:
+#     - phone
+#     - lapTop
+#     - ipad
+#  dog:
+#    name: 旺财
+#    age: 2

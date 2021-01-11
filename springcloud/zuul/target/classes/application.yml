@@ -1,0 +1,16 @@
+###配置路由映射
+zuul:
+  routes:
+    api-a:
+      path: /api-data/**
+      serviceId: product-data-service
+    api-b:
+      path: /api-view/**
+      serviceId: product-view-service-feign
+spring:
+  application:
+    name: zuul
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
