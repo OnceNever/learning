@@ -10,12 +10,22 @@ import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.ScoreSortBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,15 +46,28 @@ public class TestElasticSearch4J {
 
     public static void main(String[] args) throws IOException {
         try {
-            //确保索引存在
+            //============查询=================
+            String keyWords = "炫酷太阳镜";
+            int start = 0;
+            int count = 10;
+            long time1 = new Date().getTime();
+            SearchHits hits = search(keyWords, start, count);
+            for (SearchHit hit : hits) {
+                System.out.println(hit.getSourceAsString());
+            }
+            long time2 = new Date().getTime();
+            System.out.println("根据关键词"+keyWords+"查询完毕，查询耗时"+(time2-time1)+"ms");
+            //============批量插入==============
+            /*//确保索引存在
             if(!checkExistIndex(indexName)){
                 createIndex(indexName);
             }
 
             List<Product> products = ProductUtil.file2List(fileName);
             System.out.println("准备数据，总共 "+ products.size() + "条");
-            batchInsert(products);
+            batchInsert(products);*/
 
+            //==========================================
             /*//准备数据
             Product product = new Product();
             product.setId(1);
@@ -72,6 +95,26 @@ public class TestElasticSearch4J {
         } finally {
             client.close();
         }
+    }
+
+    private static SearchHits search(String keyWords, int start, int count) throws IOException {
+        SearchRequest searchRequest = new SearchRequest(indexName);
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+        //关键词匹配
+        MatchQueryBuilder matchQueryBuilder = new MatchQueryBuilder("name", keyWords);
+        //模糊匹配
+        matchQueryBuilder.fuzziness(Fuzziness.AUTO);
+        sourceBuilder.query(matchQueryBuilder);
+        //第几页 第几条
+        sourceBuilder.from(start);
+        sourceBuilder.size(count);
+
+        searchRequest.source(sourceBuilder);
+        //匹配度从高到低
+        sourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.DESC));
+        SearchResponse response = client.search(searchRequest);
+        SearchHits hits = response.getHits();
+        return hits;
     }
 
     private static void batchInsert(List<Product> products) throws IOException {
