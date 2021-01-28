@@ -24,4 +24,9 @@ public class ProductServicesImpl implements IProductService {
     public void insertProd(List<Product> productList) {
         mapper.insertProd(productList);
     }
+
+    @Override
+    public List<Product> qryByCondition(int id) {
+        return mapper.qryByCondition(id);
+    }
 }

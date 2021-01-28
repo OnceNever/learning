@@ -14,4 +14,6 @@ import java.util.List;
  */
 public interface IProductService {
     public void insertProd(List<Product> productList);
+
+    public List<Product> qryByCondition(int id);
 }

@@ -16,4 +16,6 @@ import java.util.List;
 public interface ProductMapper {
 
     public void insertProd(List<Product> productList);
+
+    public List<Product> qryByCondition(int id);
 }

@@ -15,4 +15,13 @@
         </foreach>
     </insert>
 
+    <select id="qryByCondition" resultType="cn.seeyourface.elasticearch.entity.Product" parameterType="Integer">
+        SELECT
+        *
+        FROM
+        product
+        WHERE
+        id = #{id}
+    </select>
+
 </mapper>

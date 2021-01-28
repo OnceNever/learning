@@ -4,9 +4,7 @@ import cn.seeyourface.elasticearch.Utils.ProductUtil;
 import cn.seeyourface.elasticearch.entity.Product;
 import cn.seeyourface.elasticearch.services.impl.ProductServicesImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,5 +33,13 @@ public class ProductController {
             e.printStackTrace();
         }
         return retMsg;
+    }
+
+    @GetMapping("/product/{id}")
+    public String qryByCondition(@PathVariable int id){
+        List<Product> products = services.qryByCondition(id);
+        if (products != null && products.size() > 0)
+            return products.get(0).toString();
+        return "0";
     }
 }

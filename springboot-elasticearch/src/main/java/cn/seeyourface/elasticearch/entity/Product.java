@@ -13,6 +13,19 @@ public class Product {
     String category;
     float price;
     String place;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                ", place='" + place + '\'' +
+                ", code='" + code + '\'' +
+                '}';
+    }
+
     String code;
 
     public int getId() {
