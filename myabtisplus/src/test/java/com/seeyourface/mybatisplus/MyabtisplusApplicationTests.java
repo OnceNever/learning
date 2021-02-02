@@ -2,7 +2,8 @@ package com.seeyourface.mybatisplus;
 
 import com.seeyourface.mybatisplus.entity.User;
 import com.seeyourface.mybatisplus.mapper.UserMapper;
-import com.seeyourface.mybatisplus.services.interfaces.UserService;
+import com.seeyourface.mybatisplus.services.UserServiceImpl;
+import com.seeyourface.mybatisplus.services.interfaces.IUserService;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
@@ -15,15 +16,31 @@ import java.util.List;
 class MyabtisplusApplicationTests {
 
     @Autowired
-    UserMapper userMapper;
+    UserServiceImpl userService;
 
-    @Autowired
-    UserService userService;
+    @Test
+    void testSaveOrUpdate(){
+        User user = new User();
+        user.setId(6L);
+        user.setAge(26);
+        user.setName("haha");
+        user.setEmail("haha@163.com");
+        userService.saveOrUpdate(user);
+    }
+
+    @Test
+    void testSave(){
+       User user = new User();
+       user.setAge(24);
+       user.setName("Coco");
+       user.setEmail("coco@163.com");
+       userService.save(user);
+    }
 
     @Test
     void contextLoads() {
         System.out.println(("----- selectAll method test ------"));
-        List<User> userList = userMapper.selectList(null);
+        List<User> userList = userService.list(null);
         Assert.assertEquals(5, userList.size());
         userList.forEach(System.out::println);
     }

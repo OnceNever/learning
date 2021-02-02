@@ -1,5 +1,9 @@
 package com.seeyourface.mybatisplus.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 /**
  * @ClassName: User
  * @Description: TODO
@@ -7,6 +11,7 @@ package com.seeyourface.mybatisplus.entity;
  * @Date: 2021/2/1 17:25
  * @Version: V1.0
  */
+@TableName(value = "user")
 public class User {
     @Override
     public String toString() {
@@ -17,7 +22,8 @@ public class User {
                 ", email='" + email + '\'' +
                 '}';
     }
-
+    //标识主键自增
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     private String name;
     private Integer age;
