@@ -1,0 +1,89 @@
+package com.yanglei.thread.lock;
+
+import com.sun.xml.internal.stream.util.ThreadLocalBufferAllocator;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * @ClassName: LockTest
+ * @Description: TODO  测试Lock的使用 (需要手动释放)
+ * @Author: Yanglei
+ * @Date: 2021/3/4 15:16
+ * @Version: V1.0
+ */
+public class LockTest {
+    public static void main(String[] args) {
+        Lock lock = new ReentrantLock();
+        Condition condition = lock.newCondition();
+
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    log("线程启动");
+                    log("试图占有对象：lock");
+                    lock.lock();
+                    log("占有对象：lock 成功");
+                    log("进行5秒的业务操作");
+                    Thread.sleep(5000);
+                    log("临时释放对象：lock 并等待");
+                    condition.await();
+                    log("重新获取对象：lock");
+                    log("进行5秒的业务操作");
+                    Thread.sleep(5000);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }finally {
+                    log("释放对象：lock");
+                    lock.unlock();
+                }
+                log("线程结束");
+            }
+        });
+        t1.setName("Thread-1 ");
+        t1.start();
+
+        //先让t1运行两秒
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    log("线程启动");
+                    log("尝试占有对象：lock");
+                    lock.lock();
+                    log("占有对象：lock");
+                    log("进行5秒的业务操作");
+                    Thread.sleep(5000);
+                    log("唤醒等待中的线程");
+                    condition.signal();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    log("释放对象：lock");
+                    lock.unlock();
+                }
+                log("线程结束");
+            }
+        });
+        t2.setName("Thread-2 ");
+        t2.start();
+    }
+
+    public static String now() {
+        return new SimpleDateFormat("HH:mm:ss").format(new Date());
+    }
+
+    public static void log(String msg) {
+        System.out.printf("%s %s %s %n", now() , Thread.currentThread().getName() , msg);
+    }
+}
