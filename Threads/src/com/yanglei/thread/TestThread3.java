@@ -17,7 +17,7 @@ public class TestThread3 {
         Hero teemo = new Hero();
         teemo.setName("提莫");
         teemo.setHp(300);
-        teemo.setDamage(30);
+        teemo.setDamage(60);
 
         Hero bh = new Hero();
         bh.setName("赏金");
@@ -29,48 +29,60 @@ public class TestThread3 {
         leesin.setHp(455);
         leesin.setDamage(80);
 
-        new Thread(){
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                if(gareen.getHp() > 0){
-                    while(!teemo.isDead(teemo.getHp())){
-                        gareen.attack(teemo);
+                while(!gareen.isDead(gareen.getHp()) && !teemo.isDead(teemo.getHp())){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
+                    gareen.attack(teemo);
                 }
             }
-        }.start();
+        }).start();
 
-        new Thread(){
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                if(teemo.getHp() > 0){
-                    while(!gareen.isDead(gareen.getHp())){
-                        teemo.attack(gareen);
+                while(!teemo.isDead(teemo.getHp()) && !gareen.isDead(gareen.getHp())){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
+                    teemo.attack(gareen);
                 }
             }
-        }.start();
+        }).start();
 
-        new Thread(){
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
-                if(bh.getHp() > 0){
-                    while(!leesin.isDead(leesin.getHp())){
-                        bh.attack(leesin);
+                while(!bh.isDead(bh.getHp()) && !leesin.isDead(leesin.getHp())){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
+                    bh.attack(leesin);
                 }
             }
-        }.start();
+        }).start();
 
-        new Thread(){
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                if(leesin.getHp() > 0){
-                    while(!bh.isDead(bh.getHp())){
-                        leesin.attack(bh);
+                while(!leesin.isDead(leesin.getHp()) && !bh.isDead(bh.getHp())){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
+                    leesin.attack(bh);
                 }
             }
-        }.start();
+        }).start();*/
     }
 }

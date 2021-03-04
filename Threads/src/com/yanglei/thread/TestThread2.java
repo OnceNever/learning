@@ -30,8 +30,17 @@ public class TestThread2 {
         leesin.setDamage(80);
 
         KillThread thread1 = new KillThread(gareen, teemo);
-        new Thread(thread1).start();
+        Thread t1 = new Thread(thread1);
+        t1.start();
+        try {
+            //将t1线程加入到主线程之中，等待t1线程运行结束之后主线程才会继续往下执行启动t2线程
+            //这个方法使交替执行的两个进程变为有序执行，即先执行t1在执行t2
+            t1.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         KillThread thread2 = new KillThread(bh, leesin);
-        new Thread(thread2).start();
+        Thread t2 = new Thread(thread2);
+        t2.start();
     }
 }
