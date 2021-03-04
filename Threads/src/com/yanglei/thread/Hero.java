@@ -43,6 +43,15 @@ public class Hero {
 
     //回血
     public synchronized void recover(){
+        while(this.hp >= 5){
+            try {
+                //血量到达上限，等待扣血
+                System.out.println("血量到达上限，等待扣血...");
+                this.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         hp=hp+1;
         System.out.println("英雄回血，当前血量为："+this.hp);
         this.notify();
@@ -50,7 +59,7 @@ public class Hero {
 
     //掉血
     public synchronized void hurt(){
-        if(this.hp == 1){
+        while(this.hp <= 1){
             try {
                 System.out.println("英雄血量只剩1点，等待回血...");
                 this.wait();
@@ -60,6 +69,8 @@ public class Hero {
         }
         hp=hp-1;
         System.out.println("英雄扣血，当前血量为："+this.hp);
+        //掉血之后唤醒等待的线程
+        this.notify();
     }
 
     public boolean isDead(Integer hp){
