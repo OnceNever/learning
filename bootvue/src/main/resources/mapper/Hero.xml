@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.seeyourface.bootvue.mapper.HeroMapper">
+
+    <insert id="add" parameterType="Hero">
+        INSERT INTO
+            hero(name, hp)
+        VALUES
+            (#{name}, #{hp})
+    </insert>
+
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM
+            hero
+        WHERE
+            id = #{id}
+    </delete>
+
+    <select id="get" parameterType="Integer" resultType="Hero">
+        SELECT *
+        FROM
+            hero
+        WHERE
+            id = #{id}
+    </select>
+    
+    <update id="update" parameterType="Hero">
+        UPDATE
+            hero
+        SET
+            name = #{name}, hp = #{hp}, id = #{id}
+    </update>
+
+    <select id="list" resultType="Hero">
+        SELECT *
+        FROM
+            hero
+    </select>
+</mapper>
