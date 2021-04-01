@@ -56,15 +56,15 @@ public class HeroController {
     }
 
     @PostMapping("/heroes")
-    public String add(Hero h) throws Exception{
+    public String add(@RequestBody Hero h) throws Exception{
         log.error("POST --- Hero info is:" + h);
         service.add(h);
         return "SUCCESS";
     }
 
     @PutMapping("/heroes")
-    public String update(Hero h) throws Exception{
-        log.error("PUT --- Hero info is:" + h);
+    public String update(@RequestBody Hero h) throws Exception{
+        log.info("PUT --- Hero info is:" + h);
         service.update(h);
         return "SUCCESS";
     }

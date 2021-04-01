@@ -22,7 +22,7 @@
             血量：
             <input type="number" v-model="hero4update.hp"/>
             <br>
-            <input type="hidden" v-model="hero4Update.id"/>
+            <input type="hidden" v-model="hero4update.id"/>
             <button type="button" v-on:click="update">修改</button>
             <button type="button" v-on:click="cancel">取消</button>
         </div>
@@ -47,7 +47,7 @@
         //ViewModel
         var vue = new Vue({
             el: '#app',
-            data: data4Vue,
+            data: update4Vue,
             mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
                 this.get();
             },
@@ -57,12 +57,12 @@
                     var url = "heroes/"+id;
                     console.log(url);
                     axios.get(url).then(function(response) {
-                        vue.hero4Update = response.data;
+                        vue.hero4update = response.data;
                     })
                 },
                 update:function (event) {
-                    var url = "heroes/"+vue.hero4Update.id;
-                    axios.put(url,vue.hero4Update).then(function(response){
+                    var url = "heroes/"+vue.hero4update.id;
+                    axios.put(url,vue.hero4update).then(function(response){
                         location.href="listHero";
                     });
                 },

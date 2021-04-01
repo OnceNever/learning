@@ -19,5 +19,5 @@ import lombok.ToString;
 public class Hero {
     private int id;
     private String name;
-    private int hp;
+    private String hp;
 }

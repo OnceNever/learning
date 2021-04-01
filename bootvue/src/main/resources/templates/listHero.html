@@ -89,7 +89,7 @@
     <script>
         var data4Vue = {
             heroes : [],
-            hero4Add : {id : 0, name : '', hp : '0'},
+            hero4Add : {id : 0, name : 'test', hp : '0'},
             pagination : {}
         }
 
@@ -112,12 +112,13 @@
                 add: function (){
                     var url = "heroes";
                     axios.post(url, this.hero4Add).then(function (response){
+                        console.log(this.hero4Add);
                         vue.list(1);
                         vue.hero4Add = {id : 0, name : '', hp : '0'}
                     })
                 },
-                delete: function(id){
-                    var url = "/heroes/" + id;
+                deleteHero: function(id){
+                    var url = "heroes/" + id;
                     axios.delete(url).then(function (response){
                         vue.list(1);
                     })
