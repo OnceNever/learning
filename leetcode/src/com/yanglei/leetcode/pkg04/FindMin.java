@@ -26,11 +26,32 @@ package com.yanglei.leetcode.pkg04;
 public class FindMin {
 
     public static void main(String[] args) {
-        int[] nums = new int[]{3, 4, 5, 1, 2};
+        int[] nums = new int[]{11,13,15,17};
         System.out.println(findMin(nums));
     }
 
+    //二分查找
     private static int findMin(int[] nums){
+        int left = 0;
+        int right = nums.length - 1;
+        while (left < right){//当left = right时，两边界重合，循环结束找到最小值
+            int mid = left + (right - left)/2;
+            if (nums[mid] > nums[right]){//因为这是一个递增数组，只需要比较中间值与最右值就能判断最小值在哪个半区
+                //中间值大于最右边界值，将右半区x为索引，y为值画在坐标上类似一个"V",左高右低，说明最小值在右半区
+                //这时候收缩左半区，将mid的位置赋予新的left,但是因为nums[mid] > nums[right],所以最小值一定不是nums[mid]
+                //新的left的值可以进一步确定为mid+1。
+                left = mid + 1;
+            } else {
+                //中间值小于最右值，右半区呈现递增，所以最小值一定在左半区，包含中间值。
+                //收缩右半区间，将mid的位置赋予新的right。
+                right = mid;
+            }
+        }
+        //当left = right时，循环结束，左右边界重合，找出最小值
+        return nums[right];
+    }
+
+    /*private static int findMin(int[] nums){
         int num = nums[0];
         for (int i = 0; i < nums.length -1; i++){
             num = compare2Num(num, nums[i+1]);
@@ -41,5 +62,5 @@ public class FindMin {
     private static int compare2Num(int a, int b){
         if (a < b) return a;
         return b;
-    }
+    }*/
 }
