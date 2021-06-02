@@ -1,5 +1,7 @@
 package com.yanglei.leetcode.pkg05;
 
+import com.yanglei.leetcode.entity.TreeNode;
+
 /**
  * @ClassName: MaximumBinaryTree
  * @Description: TODO 654.最大二叉树
@@ -14,19 +16,6 @@ package com.yanglei.leetcode.pkg05;
  * @Version: V1.0
  */
 public class MaximumBinaryTree {
-    /*二叉树数据结构*/
-    public class TreeNode {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode() {}
-      TreeNode(int val) { this.val = val; }
-      TreeNode(int val, TreeNode left, TreeNode right) {
-          this.val = val;
-          this.left = left;
-          this.right = right;
-      }
-  }
 
     TreeNode constructMaximumBinaryTree(int[] nums){
         int head = 0, end = nums.length - 1;

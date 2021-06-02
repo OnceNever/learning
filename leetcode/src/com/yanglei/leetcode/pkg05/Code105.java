@@ -1,5 +1,7 @@
 package com.yanglei.leetcode.pkg05;
 
+import com.yanglei.leetcode.entity.TreeNode;
+
 /**
  * @ClassName: Code_105
  * @Description: TODO 根据一棵树的前序遍历与中序遍历构造二叉树。
@@ -12,18 +14,6 @@ package com.yanglei.leetcode.pkg05;
  * @Version: V1.0
  */
 public class Code105 {
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode() {}
-        TreeNode(int val) { this.val = val; }
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
-    }
 
     TreeNode buildTree(int[] preOrder, int[] inOrder){
         return build(preOrder, 0, preOrder.length - 1,

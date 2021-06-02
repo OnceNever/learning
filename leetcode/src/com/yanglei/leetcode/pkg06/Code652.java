@@ -1,5 +1,6 @@
 package com.yanglei.leetcode.pkg06;
 
+import com.yanglei.leetcode.entity.TreeNode;
 import com.yanglei.leetcode.pkg05.Code106;
 
 import java.util.HashMap;
@@ -19,18 +20,6 @@ import java.util.Map;
  * @Version: V1.0
  */
 public class Code652 {
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode() {}
-        TreeNode(int val) { this.val = val; }
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
-    }
 
     /**key:序列化后的子树，value:出现的次数*/
     Map<String, Integer> childMap = new HashMap<>(16);
